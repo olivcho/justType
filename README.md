@@ -1,8 +1,8 @@
-# JustWrite
+# justType
 
-A minimalist, distraction-free writing application built with React. JustWrite provides a clean interface for writing and editing text with a focus on simplicity and functionality.
+A minimalist, distraction-free writing application built with React. justType provides a clean interface for writing and editing text with a focus on simplicity and functionality.
 
-![JustWrite Screenshot](justtype.png)
+![justType](justtype.png)
 
 ## Features
 
