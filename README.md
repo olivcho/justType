@@ -2,7 +2,7 @@
 
 A minimalist, distraction-free writing application built with React. justType provides a clean interface for writing and editing text with a focus on simplicity and functionality.
 
-![justType](justtype.png)
+![justType](./public/justType.png)
 
 ## Features
 
