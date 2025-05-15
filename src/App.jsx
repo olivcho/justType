@@ -1,17 +1,44 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
+import TextArea from './components/TextArea'
+import FontSelector from './components/FontSelector'
+import OptionsSelector from './components/OptionsSelector'
+import Interact from './components/Interact'
 
-// Create a better typing experience than MonkeyType
-
-// Render as a markdown editor
-// Can download as a markdown or pdf file with a single button
-
-// add bold and italics, add tab, bullet points
-
+// add submit button that saves response to a database
+// add timer that shows how long it took to write the response in the top right corner
+// add button to see a random response from the database
 
 function App() {
   const [selectedFont, setSelectedFont] = useState('Arial')
   const [text, setText] = useState('')
+  const [timer, setTimer] = useState(0)
+  const [isTimerRunning, setIsTimerRunning] = useState(false)
+  
+  useEffect(() => {
+    let interval;
+    if (isTimerRunning) {
+      interval = setInterval(() => {
+        setTimer(prev => prev + 1)
+      }, 1000)
+    }
+    return () => clearInterval(interval)
+  }, [isTimerRunning])
+
+  useEffect(() => {
+    if (text.length > 0 && !isTimerRunning) {
+      setIsTimerRunning(true)
+    }}, [text])
+
+  const handleTimerClick = () => {
+    setTimer(0)
+  }
+
+  const handleReset = () => {
+    setText('')
+    setTimer(0)
+    setIsTimerRunning(false)
+  }
   
   const fonts = [
     'Arial',
@@ -19,50 +46,36 @@ function App() {
     'Courier New',
     'Georgia',
     'Verdana',
-    'Helvetica'
   ]
 
   return (
     <div className="app">
-      <textarea
-        className="text"
-        placeholder="Share your thoughts..."
-        autoFocus
-        style={{ fontFamily: selectedFont }}
-        value={text}
-        onChange={(e) => setText(e.target.value)}
+      <TextArea 
+        text={text}
+        setText={setText}
+        selectedFont={selectedFont}
       />
 
       <div className="controls">
-        <div className="font-selector">
-          {fonts.map(font => (
-            <button
-              key={font}
-              onClick={() => setSelectedFont(font)}
-              className="button"
-            >
-              {font}
-            </button>
-          ))}
-        </div>
+        <FontSelector 
+          fonts={fonts}
+          selectedFont={selectedFont}
+          setSelectedFont={setSelectedFont}
+        />
 
-        <div className="options-selector">
-          <button onClick={() => setText('')} className="button">
-            Reset
-          </button>
+        <OptionsSelector 
+          setText={setText}
+          text={text}
+          timer={timer}
+          handleReset={handleReset}
+          handleTimerClick={handleTimerClick}
+        />
 
-          <button onClick={() => {
-            const blob = new Blob([text], { type: 'text/markdown' })
-            const url = URL.createObjectURL(blob)
-            const a = document.createElement('a')
-            a.href = url
-            a.download = 'document.md'
-            a.click()
-          }} className="button">
-            Download
-          </button>
-        </div>
+        <Interact
+        />
+        
       </div>
+
     </div>
   )
 }
