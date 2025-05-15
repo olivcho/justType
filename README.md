@@ -1,11 +1,22 @@
 # justType
 
-A minimalist, distraction-free writing application built with React. justType provides a clean interface for writing and editing text with a focus on simplicity and functionality.
+A minimalist writing space where you can focus on your thoughts while gently connecting with other writers. Write in your preferred font, track your writing time, and discover what others have shared.
 
-![justType](./public/justType.png)
+<p align="center">
+  <img src="./public/justType.png" width="400" alt="justType">
+</p>
 
 ## Features
 
-- 🎨 Multiple font options (Arial, Times New Roman, Courier New, Georgia, Verdana, Helvetica)
-- 💾 Download your writing as Markdown files
-- 🎯 Clean, modern UI with smooth animations
+- ✍️ Clean, distraction-free writing interface
+- ⏱️ Built-in writing timer to track your writing duration
+- 🎨 Multiple font options (Arial, Times New Roman, Courier New, Georgia, Verdana)
+- 🤝 Share your writing with others
+- 📖 Discover random pieces from other writers
+- 🕒 See how long others took to write their thoughts
+
+Build with React + Supabase.
+
+## Getting started
+
+Use [justType](https://olivcho.github.io/justType/)!

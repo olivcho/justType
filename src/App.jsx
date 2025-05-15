@@ -75,8 +75,7 @@ function App() {
 
     if (data && data.length > 0) {
       const randomRow = data[Math.floor(Math.random() * data.length)];
-      setText(randomRow.text);
-      setTimer(randomRow.duration);
+      setText(randomRow.text + '\n\n' + 'Someone took ' + randomRow.duration + ' seconds to write this on ' + new Date(randomRow.created_at).toLocaleString() + '.');
       setSelectedFont(randomRow.font);
       setIsTimerRunning(false);
     }
