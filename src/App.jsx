@@ -4,6 +4,7 @@ import TextArea from './components/TextArea'
 import FontSelector from './components/FontSelector'
 import OptionsSelector from './components/OptionsSelector'
 import Interact from './components/Interact'
+import supabase from './supabase-client'
 
 // add submit button that saves response to a database
 // add timer that shows how long it took to write the response in the top right corner
@@ -48,6 +49,39 @@ function App() {
     'Verdana',
   ]
 
+  const handleShare = async () => {
+    if (text.length > 50) {
+      const userData = {
+        text: text,
+        duration: timer,
+        font: selectedFont
+      }
+
+      const { data, error } = await supabase
+        .from('UserText')
+        .insert(userData)
+        .single();
+
+      handleReset();
+
+    } else {
+      alert('Share some more!')
+    }
+  }
+  const handleRead = async () => {
+    const { data, error } = await supabase
+      .from('UserText')
+      .select("*")
+
+    if (data && data.length > 0) {
+      const randomRow = data[Math.floor(Math.random() * data.length)];
+      setText(randomRow.text);
+      setTimer(randomRow.duration);
+      setSelectedFont(randomRow.font);
+      setIsTimerRunning(false);
+    }
+  }
+
   return (
     <div className="app">
       <TextArea 
@@ -72,6 +106,8 @@ function App() {
         />
 
         <Interact
+          handleShare={handleShare}
+          handleRead={handleRead}
         />
         
       </div>
