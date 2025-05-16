@@ -15,6 +15,8 @@ function App() {
   const [text, setText] = useState('')
   const [timer, setTimer] = useState(0)
   const [isTimerRunning, setIsTimerRunning] = useState(false)
+  const [lastShareTime, setLastShareTime] = useState(0)
+  const RATE_LIMIT_WINDOW = 10000 // 10 seconds in milliseconds
   
   useEffect(() => {
     let interval;
@@ -50,6 +52,15 @@ function App() {
   ]
 
   const handleShare = async () => {
+    const now = Date.now()
+    const timeSinceLastShare = now - lastShareTime
+
+    if (timeSinceLastShare < RATE_LIMIT_WINDOW) {
+      const secondsRemaining = Math.ceil((RATE_LIMIT_WINDOW - timeSinceLastShare) / 1000)
+      alert(`Please wait ${secondsRemaining} seconds before sharing again.`)
+      return
+    }
+
     if (text.length > 50) {
       const userData = {
         text: text,
@@ -62,8 +73,12 @@ function App() {
         .insert(userData)
         .single();
 
-      handleReset();
-
+      if (!error) {
+        setLastShareTime(now)
+        handleReset();
+      } else {
+        alert('Error sharing your text. Please try again.')
+      }
     } else {
       alert('Share some more!')
     }
@@ -88,6 +103,10 @@ function App() {
         setText={setText}
         selectedFont={selectedFont}
       />
+
+      <div className="stats">
+
+      </div>
 
       <div className="controls">
         <FontSelector 
