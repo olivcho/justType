@@ -1,4 +1,4 @@
-# justType
+# justType - https://olivcho.github.io/justType/
 
 A minimalist writing space where you can focus on your thoughts while gently connecting with other writers. Write in your preferred font, track your writing time, and discover what others have shared.
 
